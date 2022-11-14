@@ -1086,7 +1086,7 @@ def main():
     sys.excepthook = handle_exceptions
 
     parse_config()
-    State.password = keyring.get_password("Px", key)
+    State.password = keyring.get_password("Px", State.username)
     run_pool()
 
 if __name__ == "__main__":
