@@ -234,6 +234,7 @@ class State:
     # Auth
     auth = "ANY"
     username = ""
+    password = ""
 
     # Objects
     allow = netaddr.IPGlob("*.*.*.*")
@@ -337,7 +338,7 @@ class Proxy(httpserver.BaseHTTPRequestHandler):
             pwd = None
             if len(State.username) != 0:
                 key = State.username
-                pwd = keyring.get_password("Px", key)
+                pwd = State.password
             if len(key) == 0:
                 dprint(self.curl.easyhash + ": Using SSPI to login")
                 key = ":"
@@ -1085,7 +1086,7 @@ def main():
     sys.excepthook = handle_exceptions
 
     parse_config()
-
+    State.password = keyring.get_password("Px", key)
     run_pool()
 
 if __name__ == "__main__":
